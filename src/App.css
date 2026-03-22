@@ -75,3 +75,141 @@
   position: relative;
   z-index: 1;
 }
+
+/* --- PREMIUM STYLING ADDITIONS --- */
+
+/* Global Typography & Elegance */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #4a4a4a;
+  line-height: 1.7;
+}
+
+h1, h2, h3, h4, h5, h6, .heading {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  color: #222;
+  letter-spacing: 0.5px;
+}
+
+/* Elegant Buttons */
+.btn {
+  border-radius: 30px; /* Pill shape for elegance */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.85rem;
+  padding: 12px 30px !important;
+  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+}
+
+.btn-primary {
+  background-color: #D4AF37; /* Elegant Gold */
+  border-color: #D4AF37;
+  color: #fff !important;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+}
+
+.btn-primary:hover {
+  background-color: #b5952f;
+  border-color: #b5952f;
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Cards & Sections (Rooms, Amenities, etc) Hover effects */
+.room, .media-with-text, .amenity-card, .block-2 {
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  display: block;
+}
+
+.room:hover, .media-with-text:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+  text-decoration: none;
+}
+
+.room img {
+  border-radius: 8px 8px 0 0;
+}
+
+.room-info {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.05);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  padding: 30px 25px !important;
+}
+
+.room-info h2 {
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+  color: #222;
+}
+
+.letter-spacing-1 {
+  letter-spacing: 2px;
+  font-size: 0.75rem;
+  color: #D4AF37;
+  font-weight: 700;
+}
+
+/* Refined Navbar styling */
+.site-header {
+  padding-top: 20px;
+  transition: all 0.4s ease;
+}
+
+.site-header.scrolled {
+  background: rgba(255, 255, 255, 0.98) !important;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.08);
+}
+
+.site-header.scrolled .site-logo a {
+  color: #111 !important;
+}
+
+.site-header.scrolled .site-menu-toggle span {
+  background: #111;
+}
+
+/* Testimonials */
+.testimonial blockquote p {
+  font-size: 1.3rem;
+  font-style: italic;
+  color: #444;
+  font-family: 'Playfair Display', serif;
+  line-height: 1.8;
+}
+
+/* Smoother image zoom on hover for rooms */
+.img-wrap {
+  overflow: hidden;
+  border-radius: 8px 8px 0 0;
+  margin-bottom: 0 !important;
+}
+
+.room:hover .img-wrap img {
+  transform: scale(1.05);
+}
+
+.img-wrap img {
+  transition: transform 0.6s ease;
+  margin-bottom: 0 !important;
+}
+
+/* Hero text enhancements */
+.site-hero .heading {
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  font-size: 4rem;
+}
+
+@media (max-width: 768px) {
+  .site-hero .heading {
+    font-size: 2.5rem;
+  }
+}
+
