@@ -38,19 +38,34 @@ const About = () => {
             </div>
           </div>
           <div className="row justify-content-center">
-            <div className="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-              <div className="block-2">
-                <div className="flipper">
-                  <div className="front" style={{ backgroundImage: 'url("/images/person_4.jpg")' }}>
-                    <div className="box">
-                      <h2>Sanjeev Kumar</h2>
-                      <p>Owner</p>
-                    </div>
+            <div className="col-md-10 col-lg-8 d-flex justify-content-center" data-aos="fade-up" data-aos-delay="100">
+              <div 
+                className="card mb-3" 
+                style={{ 
+                  maxWidth: '650px', 
+                  borderRadius: '15px',
+                  boxShadow: '0 15px 35px rgba(0,0,0,0.15), 0 5px 15px rgba(0,0,0,0.1)',
+                  overflow: 'hidden',
+                  border: '1px solid #e0e0e0'
+                }}
+              >
+                <div className="row g-0 h-100">
+                  <div className="col-md-5 position-relative" style={{ zIndex: 2, boxShadow: '4px 0 10px rgba(0,0,0,0.08)' }}>
+                    <img 
+                      src="/images/person_4.jpg" 
+                      className="img-fluid h-100 w-100" 
+                      style={{ objectFit: 'cover' }} 
+                      alt="Sanjeev Kumar" 
+                    />
                   </div>
-                  <div className="back">
-                    <blockquote>
-                      <p>&ldquo;Welcome to Hotel Shaan. We take pride in our service and look forward to hosting you in our beautiful corner of the world.&rdquo;</p>
-                    </blockquote>
+                  <div className="col-md-7 d-flex align-items-center" style={{ backgroundColor: '#fafafa', zIndex: 1 }}>
+                    <div className="card-body p-4 p-md-5 text-left" style={{ textAlign: 'left' }}>
+                      <h4 className="card-title font-weight-bold mb-2" style={{ color: '#222' }}>Sanjeev Kumar</h4>
+                      <p className="card-text mb-4"><span className="badge bg-primary text-white" style={{ padding: '8px 12px', fontSize: '0.8rem', letterSpacing: '1px', textTransform: 'uppercase' }}>Owner</span></p>
+                      <p className="card-text text-muted" style={{ fontSize: '1.05rem', lineHeight: '1.6', fontStyle: 'italic' }}>
+                        &ldquo;Welcome to Hotel Shaan. We take pride in our service and look forward to hosting you in our beautiful corner of the world.&rdquo;
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -62,31 +77,43 @@ const About = () => {
       <section className="section bg-light">
         <div className="container">
           <div className="row">
-            <div className="col-md-6 col-lg-4" data-aos="fade-up">
-              <div className="media-with-text">
+            <div className="col-md-6 col-lg-4 mb-4" data-aos="fade-up">
+              <div className="card h-100 border-0 shadow-sm" style={{ borderRadius: '15px', overflow: 'hidden', transition: 'transform 0.3s ease, box-shadow 0.3s ease' }} 
+                   onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-10px)'; e.currentTarget.style.boxShadow = '0 15px 35px rgba(0,0,0,0.15), 0 5px 15px rgba(0,0,0,0.1)'; }}
+                   onMouseLeave={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 0.125rem 0.25rem rgba(0,0,0,0.075)'; }}>
                 <div className="img-wrap-2">
-                  <img src="/images/hotel-shaan/new_images/32.jpg" alt="Mountain View" className="img-fluid" />
+                  <img src="/images/hotel-shaan/new_images/32.jpg" alt="Mountain View" className="img-fluid w-100" style={{ objectFit: 'cover', height: '250px' }} />
                 </div>
-                <h2 className="heading">Scenic Views</h2>
-                <p>Enjoy panoramic views of the Chamba mountains right from your balcony. The tranquility here is unmatched.</p>
+                <div className="card-body p-4 text-left" style={{ backgroundColor: '#fff' }}>
+                  <h3 className="heading font-weight-bold mb-3" style={{ fontSize: '1.75rem', color: '#222' }}>Scenic Views</h3>
+                  <p className="text-muted" style={{ lineHeight: '1.6', fontSize: '1.05rem' }}>Enjoy panoramic views of the Chamba mountains right from your balcony. The tranquility here is unmatched.</p>
+                </div>
               </div>
             </div>
-            <div className="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
-              <div className="media-with-text">
+            <div className="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+              <div className="card h-100 border-0 shadow-sm" style={{ borderRadius: '15px', overflow: 'hidden', transition: 'transform 0.3s ease, box-shadow 0.3s ease' }}
+                   onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-10px)'; e.currentTarget.style.boxShadow = '0 15px 35px rgba(0,0,0,0.15), 0 5px 15px rgba(0,0,0,0.1)'; }}
+                   onMouseLeave={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 0.125rem 0.25rem rgba(0,0,0,0.075)'; }}>
                 <div className="img-wrap-2">
-                  <img src="/images/hotel-shaan/new_images/19.jpg" alt="Food" className="img-fluid" />
+                  <img src="/images/hotel-shaan/new_images/19.jpg" alt="Food" className="img-fluid w-100" style={{ objectFit: 'cover', height: '250px' }} />
                 </div>
-                <h2 className="heading">Delicious Food</h2>
-                <p>Our restaurant serves freshly prepared meals that focus on quality and taste, giving you a taste of local hospitality.</p>
+                <div className="card-body p-4 text-left" style={{ backgroundColor: '#fff' }}>
+                  <h3 className="heading font-weight-bold mb-3" style={{ fontSize: '1.75rem', color: '#222' }}>Delicious Food</h3>
+                  <p className="text-muted" style={{ lineHeight: '1.6', fontSize: '1.05rem' }}>Our restaurant serves freshly prepared meals that focus on quality and taste, giving you a taste of local hospitality.</p>
+                </div>
               </div>
             </div>
-            <div className="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
-              <div className="media-with-text">
+            <div className="col-md-6 col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+              <div className="card h-100 border-0 shadow-sm" style={{ borderRadius: '15px', overflow: 'hidden', transition: 'transform 0.3s ease, box-shadow 0.3s ease' }}
+                   onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-10px)'; e.currentTarget.style.boxShadow = '0 15px 35px rgba(0,0,0,0.15), 0 5px 15px rgba(0,0,0,0.1)'; }}
+                   onMouseLeave={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 0.125rem 0.25rem rgba(0,0,0,0.075)'; }}>
                 <div className="img-wrap-2">
-                  <img src="/images/hotel-shaan/hotel5.jpg" alt="Rooms" className="img-fluid" />
+                  <img src="/images/hotel-shaan/hotel5.jpg" alt="Rooms" className="img-fluid w-100" style={{ objectFit: 'cover', height: '250px' }} />
                 </div>
-                <h2 className="heading">Clean & Comfortable</h2>
-                <p>We maintain high standards of cleanliness and comfort in all our rooms to ensure a restful stay.</p>
+                <div className="card-body p-4 text-left" style={{ backgroundColor: '#fff' }}>
+                  <h3 className="heading font-weight-bold mb-3" style={{ fontSize: '1.75rem', color: '#222' }}>Clean & Comfortable</h3>
+                  <p className="text-muted" style={{ lineHeight: '1.6', fontSize: '1.05rem' }}>We maintain high standards of cleanliness and comfort in all our rooms to ensure a restful stay.</p>
+                </div>
               </div>
             </div>
           </div>
