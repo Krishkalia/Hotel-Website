@@ -37,10 +37,16 @@ const Navbar = () => {
               <span></span>
             </div>
             
-            <div className="site-navbar" style={{ display: menuOpen ? 'block' : 'none', opacity: menuOpen ? 1 : 0, transition: 'opacity 0.4s ease' }}>
+            <div className={`site-navbar js-site-navbar`} style={{ 
+              display: menuOpen ? 'block' : 'none', 
+              opacity: menuOpen ? 1 : 0, 
+              transition: 'opacity 0.4s ease',
+              height: '100dvh',
+              overflowY: 'auto'
+            }}>
               <nav role="navigation">
                 <div className="container">
-                  <div className="row full-height align-items-center">
+                  <div className="row full-height align-items-center justify-content-center">
                     <div className="col-md-6 mx-auto">
                       <ul className="list-unstyled menu">
                         <li className={getActive('/')}><Link to="/">Home</Link></li>

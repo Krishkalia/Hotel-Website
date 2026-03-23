@@ -2,6 +2,7 @@
 
 	'use strict';
 
+/*
   $('.site-menu-toggle').click(function(){
     var $this = $(this);
     if ( $('body').hasClass('menu-open') ) {
@@ -14,6 +15,7 @@
       $('body').addClass('menu-open');
     }
   });
+*/
 
 	
 	$('nav .dropdown').hover(function(){

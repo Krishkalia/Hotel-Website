@@ -29,9 +29,10 @@ const Contact = () => {
     const templateParams = {
       from_name: formData.name,
       from_email: formData.email,
+      reply_to: formData.email, // Standard EmailJS variable
       phone: formData.phone,
       message: formData.message,
-      to_email: 'krishkaliajal10@gmail.com'
+      to_email: 'hotelticket77@gmail.com'
     };
 
     emailjs.send(serviceID, templateID, templateParams, publicKey)
@@ -74,6 +75,7 @@ const Contact = () => {
                         className="form-control" 
                         placeholder="Your Name" 
                         required 
+                        autoComplete="name"
                         value={formData.name}
                         onChange={handleChange}
                       />
@@ -85,6 +87,7 @@ const Contact = () => {
                         id="phone" 
                         className="form-control" 
                         placeholder="Your Phone" 
+                        autoComplete="tel"
                         value={formData.phone}
                         onChange={handleChange}
                       />
@@ -100,6 +103,7 @@ const Contact = () => {
                         className="form-control" 
                         placeholder="Your Email" 
                         required 
+                        autoComplete="email"
                         value={formData.email}
                         onChange={handleChange}
                       />
@@ -114,7 +118,7 @@ const Contact = () => {
                         id="message" 
                         className="form-control" 
                         cols="30" 
-                        rows="8" 
+                        rows="6" 
                         placeholder="How can we help you?"
                         required
                         value={formData.message}
