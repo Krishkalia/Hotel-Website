@@ -222,6 +222,19 @@ h1, h2, h3, h4, h5, h6, .heading {
   text-shadow: 1px 1px 3px rgba(0,0,0,0.3) !important;
   font-weight: 400 !important;
   letter-spacing: 1px;
+  white-space: nowrap; /* Prevent wrapping */
+}
+
+@media (max-width: 576px) {
+  .site-logo a {
+    font-size: 30px !important;
+  }
+}
+
+@media (max-width: 375px) {
+  .site-logo a {
+    font-size: 26px !important;
+  }
 }
 
 /* Hero text enhancements */
