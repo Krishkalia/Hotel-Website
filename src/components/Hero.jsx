@@ -22,9 +22,9 @@ const Hero = ({ title, subtitle, backgroundImage, backgroundPosition = 'center c
         </div>
       </div>
 
-      <a className="mouse smoothscroll" href="#next">
-        <div className="mouse-icon">
-          <span className="mouse-wheel"></span>
+      <a className="mouse smoothscroll bounce-arrow" href="#next">
+        <div className="scroll-arrow">
+          <i className="fa fa-angle-down text-white h3"></i>
         </div>
       </a>
     </section>
