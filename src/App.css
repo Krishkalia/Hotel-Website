@@ -252,18 +252,33 @@ h1, h2, h3, h4, h5, h6, .heading {
 /* Map Responsiveness */
 .map-responsive {
   overflow: hidden;
-  padding-bottom: 56.25%;
-  position: relative;
-  height: 0;
-  border-radius: 12px;
+  border-radius: 20px;
+  /* 3D Border Effect */
+  background: #fff;
+  padding: 15px;
+  box-shadow: 
+    0 20px 40px rgba(0,0,0,0.12),
+    0 10px 20px rgba(0,0,0,0.08),
+    inset 0 0 2px rgba(255,255,255,1);
+  border: 1px solid rgba(0,0,0,0.1);
+  transform: perspective(2000px) rotateX(2deg);
+  transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+  margin-bottom: 30px;
+}
+
+.map-responsive:hover {
+  transform: perspective(2000px) rotateX(0deg) translateY(-8px);
+  box-shadow: 
+    0 40px 70px rgba(0,0,0,0.18),
+    0 15px 30px rgba(0,0,0,0.12);
 }
 
 .map-responsive iframe {
-  left: 0;
-  top: 0;
-  height: 100%;
   width: 100%;
-  position: absolute;
+  height: 500px;
+  border-radius: 12px;
+  display: block;
+  border: none;
 }
 
 /* Dynamic Viewport Height Fix for Mobile */

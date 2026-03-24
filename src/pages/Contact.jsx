@@ -191,12 +191,13 @@ const Contact = () => {
             <div className="col-md-12" data-aos="fade-up">
               <div className="map-responsive">
                 <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13444.640000000001!2d75.8604006!3d32.81664!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391dd96e00000001%3A0xe0b5a1f00000000!2sHOTEL%20SHAAN!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin" 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3385.539480998165!2d76.14671005307835!3d32.816045668251284!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391cc3e7a2d4294d%3A0xdfc48e5479e8be15!2sHOTEL%20SHAAN!5e0!3m2!1sen!2sin!4v1774367566152!5m2!1sen!2sin&maptype=satellite" 
                   width="100%" 
                   height="450" 
                   style={{ border: 0 }} 
                   allowFullScreen="" 
                   loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
                 ></iframe>
               </div>
             </div>
