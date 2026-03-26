@@ -1,6 +1,12 @@
 import React, { useEffect } from 'react';
 import Hero from '../components/Hero';
 import { Link } from 'react-router-dom';
+import DomeGallery from '../components/DomeGallery';
+
+const attractionImages = Array.from({ length: 20 }, (_, i) => ({
+  src: `/images/nearby-attractions/attraction-${i + 1}.jpeg`,
+  alt: `Nearby Attraction ${i + 1}`
+}));
 
 const Home = () => {
   useEffect(() => {
@@ -227,6 +233,31 @@ const Home = () => {
               ))}
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="section pb-0">
+        <div className="container">
+          <div className="row justify-content-center text-center mb-5">
+            <div className="col-md-7">
+              <h2 className="heading" data-aos="fade-up">Nearby Attractions</h2>
+              <p className="text-muted" data-aos="fade-up" data-aos-delay="100">
+                Explore the breathtaking beauty and hidden gems surrounding Hotel Shaan.
+                Drag to explore the gallery and click to enlarge.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="nearby-gallery-container" data-aos="fade-up">
+          <DomeGallery
+            images={attractionImages}
+            fit={0.95}
+            minRadius={800}
+            maxVerticalRotationDeg={5}
+            segments={34}
+            dragDampening={2}
+            grayscale={false}
+          />
         </div>
       </section>
 

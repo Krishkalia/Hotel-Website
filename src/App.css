@@ -14,8 +14,18 @@ img {
   border-radius: 12px;
 }
 
+.img-absolute {
+  position: absolute;
+  top: -15%;
+  right: -5%;
+  width: 60%;
+  z-index: 2;
+}
+
 .img-absolute img {
   height: auto;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  border: 5px solid #fff;
 }
 
 /* Premium Amenities Styling */
@@ -79,6 +89,18 @@ img {
 .site-hero-inner {
   position: relative;
   z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ensure Home slider items also have enough space */
+.home-slider .slider-item .slider-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 
 /* --- PREMIUM STYLING ADDITIONS --- */
@@ -142,6 +164,11 @@ h1, h2, h3, h4, h5, h6, .heading {
   transform: translateY(-10px);
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(0, 0, 0, 0.1);
   text-decoration: none;
+}
+
+/* Ensure sections below hero have proper spacing */
+#next {
+  scroll-margin-top: 100px;
 }
 
 .room img {
@@ -328,8 +355,12 @@ body {
   bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
+  margin-left: 0 !important; /* Override legacy .mouse margin-left */
   z-index: 5;
   text-decoration: none !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .scroll-arrow {
@@ -352,9 +383,15 @@ body {
 }
 
 .scroll-arrow i {
-  margin-top: 2px;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 1;
   color: #fff;
+  font-size: 24px;
   transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .scroll-arrow:hover i {
@@ -373,7 +410,26 @@ body {
   }
 }
 
-/* Hide old mouse icon elements */
 .mouse-icon, .mouse-wheel {
   display: none !important;
+}
+
+/* Responsive Gallery Container */
+.nearby-gallery-container {
+  width: 100%;
+  height: 800px;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .nearby-gallery-container {
+    height: 500px;
+  }
+}
+
+@media (max-width: 576px) {
+  .nearby-gallery-container {
+    height: 400px;
+  }
 }

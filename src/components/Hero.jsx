@@ -24,7 +24,7 @@ const Hero = ({ title, subtitle, backgroundImage, backgroundPosition = 'center c
 
       <a className="mouse smoothscroll bounce-arrow" href="#next">
         <div className="scroll-arrow">
-          <i className="fa fa-angle-down text-white h3"></i>
+          <i className="fa fa-angle-down"></i>
         </div>
       </a>
     </section>

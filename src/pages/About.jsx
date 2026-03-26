@@ -1,6 +1,8 @@
 import React from 'react';
 import Hero from '../components/Hero';
 
+
+
 const About = () => {
   return (
     <div>
@@ -119,6 +121,8 @@ const About = () => {
           </div>
         </div>
       </section>
+
+
     </div>
   );
 };
