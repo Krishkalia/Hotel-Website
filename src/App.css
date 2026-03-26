@@ -417,19 +417,19 @@ body {
 /* Responsive Gallery Container */
 .nearby-gallery-container {
   width: 100%;
-  height: 800px;
+  height: 950px;
   position: relative;
   overflow: hidden;
 }
 
 @media (max-width: 768px) {
   .nearby-gallery-container {
-    height: 500px;
+    height: 600px;
   }
 }
 
 @media (max-width: 576px) {
   .nearby-gallery-container {
-    height: 400px;
+    height: 500px;
   }
 }
