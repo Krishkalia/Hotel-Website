@@ -168,10 +168,17 @@ export default function DomeGallery({
         default:
           basis = aspect >= 1.3 ? w : minDim;
       }
+      // Make minRadius responsive to viewport width on mobile
+      let effectiveMinRadius = minRadius;
+      if (w < 480) {
+        effectiveMinRadius = Math.min(minRadius, 300);
+      } else if (w < 768) {
+        effectiveMinRadius = Math.min(minRadius, 500);
+      }
       let radius = basis * fit;
       const heightGuard = h * 1.35;
       radius = Math.min(radius, heightGuard);
-      radius = clamp(radius, minRadius, maxRadius);
+      radius = clamp(radius, effectiveMinRadius, maxRadius);
       lockedRadiusRef.current = Math.round(radius);
 
       const viewerPad = Math.max(8, Math.round(minDim * padFactor));
