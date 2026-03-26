@@ -326,106 +326,56 @@ export default function DomeGallery({
     { target: mainRef, eventOptions: { passive: true } }
   );
 
-  useEffect(() => {
-    const scrim = scrimRef.current;
-    if (!scrim) return;
-    const close = () => {
-      if (performance.now() - openStartedAtRef.current < 250) return;
-      const el = focusedElRef.current;
-      if (!el) return;
-      const parent = el.parentElement;
-      const overlay = viewerRef.current?.querySelector('.dg-enlarge');
-      if (!overlay) return;
-      const refDiv = parent.querySelector('.dg-item__image--reference');
-      const originalPos = originalTilePositionRef.current;
-      if (!originalPos) {
-        overlay.remove();
-        if (refDiv) refDiv.remove();
-        parent.style.setProperty('--rot-y-delta', '0deg');
-        parent.style.setProperty('--rot-x-delta', '0deg');
-        el.style.visibility = '';
-        el.style.zIndex = 0;
-        focusedElRef.current = null;
-        rootRef.current?.removeAttribute('data-enlarging');
-        openingRef.current = false;
-        unlockScroll();
-        return;
-      }
-      const currentRect = overlay.getBoundingClientRect();
-      const rootRect = rootRef.current.getBoundingClientRect();
-      const originalPosRelativeToRoot = {
-        left: originalPos.left - rootRect.left,
-        top: originalPos.top - rootRect.top,
-        width: originalPos.width,
-        height: originalPos.height
-      };
-      const overlayRelativeToRoot = {
-        left: currentRect.left - rootRect.left,
-        top: currentRect.top - rootRect.top,
-        width: currentRect.width,
-        height: currentRect.height
-      };
-      const animatingOverlay = document.createElement('div');
-      animatingOverlay.className = 'dg-enlarge-closing';
-      animatingOverlay.style.cssText = `position:absolute;left:${overlayRelativeToRoot.left}px;top:${overlayRelativeToRoot.top}px;width:${overlayRelativeToRoot.width}px;height:${overlayRelativeToRoot.height}px;z-index:9999;border-radius: var(--enlarge-radius, 32px);overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.35);transition:all ${enlargeTransitionMs}ms ease-out;pointer-events:none;margin:0;transform:none;`;
-      const originalImg = overlay.querySelector('img');
-      if (originalImg) {
-        const img = originalImg.cloneNode();
-        img.style.cssText = 'width:100%;height:100%;object-fit:cover;';
-        animatingOverlay.appendChild(img);
-      }
-      overlay.remove();
-      rootRef.current.appendChild(animatingOverlay);
-      void animatingOverlay.getBoundingClientRect();
+  const closeFullscreen = useCallback(() => {
+    if (performance.now() - openStartedAtRef.current < 250) return;
+    const el = focusedElRef.current;
+    if (!el) return;
+    const parent = el.parentElement;
+    const fullscreenOverlay = document.getElementById('dg-fullscreen-overlay');
+    if (fullscreenOverlay) {
+      fullscreenOverlay.style.opacity = '0';
+      setTimeout(() => {
+        fullscreenOverlay.remove();
+      }, 300);
+    }
+    const refDiv = parent.querySelector('.dg-item__image--reference');
+    if (refDiv) refDiv.remove();
+    parent.style.transition = 'none';
+    el.style.transition = 'none';
+    parent.style.setProperty('--rot-y-delta', '0deg');
+    parent.style.setProperty('--rot-x-delta', '0deg');
+    requestAnimationFrame(() => {
+      el.style.visibility = '';
+      el.style.opacity = '0';
+      el.style.zIndex = 0;
+      focusedElRef.current = null;
+      rootRef.current?.removeAttribute('data-enlarging');
       requestAnimationFrame(() => {
-        animatingOverlay.style.left = originalPosRelativeToRoot.left + 'px';
-        animatingOverlay.style.top = originalPosRelativeToRoot.top + 'px';
-        animatingOverlay.style.width = originalPosRelativeToRoot.width + 'px';
-        animatingOverlay.style.height = originalPosRelativeToRoot.height + 'px';
-        animatingOverlay.style.opacity = '0';
-      });
-      const cleanup = () => {
-        animatingOverlay.remove();
-        originalTilePositionRef.current = null;
-        if (refDiv) refDiv.remove();
-        parent.style.transition = 'none';
-        el.style.transition = 'none';
-        parent.style.setProperty('--rot-y-delta', '0deg');
-        parent.style.setProperty('--rot-x-delta', '0deg');
+        parent.style.transition = '';
+        el.style.transition = 'opacity 300ms ease-out';
         requestAnimationFrame(() => {
-          el.style.visibility = '';
-          el.style.opacity = '0';
-          el.style.zIndex = 0;
-          focusedElRef.current = null;
-          rootRef.current?.removeAttribute('data-enlarging');
-          requestAnimationFrame(() => {
-            parent.style.transition = '';
-            el.style.transition = 'opacity 300ms ease-out';
-            requestAnimationFrame(() => {
-              el.style.opacity = '1';
-              setTimeout(() => {
-                el.style.transition = '';
-                el.style.opacity = '';
-                openingRef.current = false;
-                if (!draggingRef.current && rootRef.current?.getAttribute('data-enlarging') !== 'true')
-                  document.body.classList.remove('dg-scroll-lock');
-              }, 300);
-            });
-          });
+          el.style.opacity = '1';
+          setTimeout(() => {
+            el.style.transition = '';
+            el.style.opacity = '';
+            openingRef.current = false;
+            originalTilePositionRef.current = null;
+            document.body.classList.remove('dg-scroll-lock');
+          }, 300);
         });
-      };
-      animatingOverlay.addEventListener('transitionend', cleanup, { once: true });
-    };
-    scrim.addEventListener('click', close);
+      });
+    });
+  }, []);
+
+  useEffect(() => {
     const onKey = e => {
-      if (e.key === 'Escape') close();
+      if (e.key === 'Escape') closeFullscreen();
     };
     window.addEventListener('keydown', onKey);
     return () => {
-      scrim.removeEventListener('click', close);
       window.removeEventListener('keydown', onKey);
     };
-  }, [enlargeTransitionMs, unlockScroll]);
+  }, [closeFullscreen]);
 
   const openItemFromElement = useCallback(
     el => {
@@ -457,10 +407,8 @@ export default function DomeGallery({
       void refDiv.offsetHeight;
 
       const tileR = refDiv.getBoundingClientRect();
-      const mainR = mainRef.current?.getBoundingClientRect();
-      const frameR = frameRef.current?.getBoundingClientRect();
 
-      if (!mainR || !frameR || tileR.width <= 0 || tileR.height <= 0) {
+      if (tileR.width <= 0 || tileR.height <= 0) {
         openingRef.current = false;
         focusedElRef.current = null;
         parent.removeChild(refDiv);
@@ -471,74 +419,72 @@ export default function DomeGallery({
       originalTilePositionRef.current = { left: tileR.left, top: tileR.top, width: tileR.width, height: tileR.height };
       el.style.visibility = 'hidden';
       el.style.zIndex = 0;
-      const overlay = document.createElement('div');
-      overlay.className = 'dg-enlarge';
-      overlay.style.position = 'absolute';
-      overlay.style.left = frameR.left - mainR.left + 'px';
-      overlay.style.top = frameR.top - mainR.top + 'px';
-      overlay.style.width = frameR.width + 'px';
-      overlay.style.height = frameR.height + 'px';
-      overlay.style.opacity = '0';
-      overlay.style.zIndex = '30';
-      overlay.style.willChange = 'transform, opacity';
-      overlay.style.transformOrigin = 'top left';
-      overlay.style.transition = `transform ${enlargeTransitionMs}ms ease, opacity ${enlargeTransitionMs}ms ease`;
+
+      // Create fullscreen overlay on document.body
       const rawSrc = parent.dataset.src || el.querySelector('img')?.src || '';
+      const fullscreenOverlay = document.createElement('div');
+      fullscreenOverlay.id = 'dg-fullscreen-overlay';
+      fullscreenOverlay.style.cssText = `
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.9);
+        opacity: 0;
+        transition: opacity 300ms ease;
+        cursor: pointer;
+        backdrop-filter: blur(10px);
+      `;
+
       const img = document.createElement('img');
       img.src = rawSrc;
-      overlay.appendChild(img);
-      viewerRef.current.appendChild(overlay);
-      const tx0 = tileR.left - frameR.left;
-      const ty0 = tileR.top - frameR.top;
-      const sx0 = tileR.width / frameR.width;
-      const sy0 = tileR.height / frameR.height;
+      img.style.cssText = `
+        max-width: 92vw;
+        max-height: 90vh;
+        object-fit: contain;
+        border-radius: 12px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        pointer-events: none;
+      `;
+      fullscreenOverlay.appendChild(img);
 
-      const validSx0 = isFinite(sx0) && sx0 > 0 ? sx0 : 1;
-      const validSy0 = isFinite(sy0) && sy0 > 0 ? sy0 : 1;
+      // Close button
+      const closeBtn = document.createElement('div');
+      closeBtn.style.cssText = `
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 24px;
+        color: #fff;
+        transition: background 0.2s;
+      `;
+      closeBtn.innerHTML = '&#x2715;';
+      closeBtn.addEventListener('mouseenter', () => { closeBtn.style.background = 'rgba(255,255,255,0.3)'; });
+      closeBtn.addEventListener('mouseleave', () => { closeBtn.style.background = 'rgba(255,255,255,0.15)'; });
+      fullscreenOverlay.appendChild(closeBtn);
 
-      overlay.style.transform = `translate(${tx0}px, ${ty0}px) scale(${validSx0}, ${validSy0})`;
+      // Close handlers
+      const handleClose = () => closeFullscreen();
+      fullscreenOverlay.addEventListener('click', handleClose);
 
-      setTimeout(() => {
-        if (!overlay.parentElement) return;
-        overlay.style.opacity = '1';
-        overlay.style.transform = 'translate(0px, 0px) scale(1, 1)';
-        rootRef.current?.setAttribute('data-enlarging', 'true');
-      }, 16);
+      document.body.appendChild(fullscreenOverlay);
+      rootRef.current?.setAttribute('data-enlarging', 'true');
 
-      const wantsResize = openedImageWidth || openedImageHeight;
-      if (wantsResize) {
-        const onFirstEnd = ev => {
-          if (ev.propertyName !== 'transform') return;
-          overlay.removeEventListener('transitionend', onFirstEnd);
-          const prevTransition = overlay.style.transition;
-          overlay.style.transition = 'none';
-          const tempWidth = openedImageWidth || `${frameR.width}px`;
-          const tempHeight = openedImageHeight || `${frameR.height}px`;
-          overlay.style.width = tempWidth;
-          overlay.style.height = tempHeight;
-          const newRect = overlay.getBoundingClientRect();
-          overlay.style.width = frameR.width + 'px';
-          overlay.style.height = frameR.height + 'px';
-          void overlay.offsetWidth;
-          overlay.style.transition = `left ${enlargeTransitionMs}ms ease, top ${enlargeTransitionMs}ms ease, width ${enlargeTransitionMs}ms ease, height ${enlargeTransitionMs}ms ease`;
-          const centeredLeft = frameR.left - mainR.left + (frameR.width - newRect.width) / 2;
-          const centeredTop = frameR.top - mainR.top + (frameR.height - newRect.height) / 2;
-          requestAnimationFrame(() => {
-            overlay.style.left = `${centeredLeft}px`;
-            overlay.style.top = `${centeredTop}px`;
-            overlay.style.width = tempWidth;
-            overlay.style.height = tempHeight;
-          });
-          const cleanupSecond = () => {
-            overlay.removeEventListener('transitionend', cleanupSecond);
-            overlay.style.transition = prevTransition;
-          };
-          overlay.addEventListener('transitionend', cleanupSecond, { once: true });
-        };
-        overlay.addEventListener('transitionend', onFirstEnd);
-      }
+      requestAnimationFrame(() => {
+        fullscreenOverlay.style.opacity = '1';
+      });
     },
-    [enlargeTransitionMs, lockScroll, openedImageHeight, openedImageWidth, effectiveSegments, unlockScroll]
+    [lockScroll, closeFullscreen]
   );
 
   const onTileClick = useCallback(
